@@ -11,4 +11,4 @@ steps:
 # Create the resources using Terraform
 - name: 'gcr.io/project-test-270001/terraform-docker:0.1'
   id: Build
-  args: ['apply']  
+  args: ['apply', '-auto-approve']

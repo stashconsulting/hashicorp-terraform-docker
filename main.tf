@@ -14,7 +14,7 @@ provider "google" {
 # local-exec for building the docker image and push it from terraform
 resource "null_resource" "building_docker_image" {
   triggers = {
-    image_id = var.image_id
+    image_id = "test"
   }
   provisioner "local-exec" {
     command = <<EOF
