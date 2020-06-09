@@ -5,3 +5,4 @@ credentials.json
 deployment.sh
 terraform.tfstate
 terraform.tfstate.backup
+source_code/
