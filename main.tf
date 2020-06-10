@@ -18,7 +18,7 @@ resource "null_resource" "building_docker_image" {
   }
   provisioner "local-exec" {
     command = <<EOF
-      docker build -t kongdbless:latest .
+      docker build -t test:latest .
     EOF
   }
 }
