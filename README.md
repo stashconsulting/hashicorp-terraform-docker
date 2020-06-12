@@ -36,7 +36,7 @@ resource "null_resource" "building_docker_image" {
   }
 }
 ```
-You have to use a Docker volume to store the files that we will use to the container. 
+You have to use a Docker volume to store the files that we will use to build the container. 
 
 ```
 docker run -it -v $(pwd)/:/workpace -w /workpace terraform-docker:0.1 init;  apply -auto-approve
@@ -54,7 +54,7 @@ Here is a simple example of `cloudbuil.yaml` file that invokes the `terraform-do
 
 ## Built With 🛠️
 
-* [Docker](https://docs.docker.com/engine/release-notes/) - software containers used
+* [Docker](https://docs.docker.com/engine/release-notes/)
 
 ## Contributing 🖇️
 
@@ -77,15 +77,14 @@ Please read the [LICENSE](https://github.com/stashconsulting/terraform-docker/bl
 
 ## Acknowledgments
 This image was born when we wanted to manage the infrastructure with terraform and we required 
-to build a docker image for a project but it was not possible because the terraform image does not have a docker.
+to build a docker image for a project but it was not possible because the terraform image does not have docker.
 
 Please tell others about this project. 📢
 
+---
 
-#
-
-* *The [`gcr.io/cloud-builders/docker`](https://github.com/GoogleCloudPlatform/cloud-builders/tree/master/docker) image that we based on to create the `terraform-docker` image is maintained by 
+* *The [`gcr.io/cloud-builders/docker`](https://github.com/GoogleCloudPlatform/cloud-builders/tree/master/docker) image that we used as base to create the `terraform-docker` image is maintained by 
 the Cloud Build team.*
 
 ---
-⌨️ with ❤️ for [Alvarez](https://github.com/syler023)
+⌨️ with ❤️ by [Alvarez](https://github.com/syler023)
