@@ -1,4 +1,4 @@
-FROM gcr.io/cloud-builders/docker
+FROM gcr.io/cloud-builders/docker:19.03.8
 
 WORKDIR /workspace/
 
