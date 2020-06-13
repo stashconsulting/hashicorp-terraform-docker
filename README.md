@@ -36,12 +36,17 @@ resource "null_resource" "building_docker_image" {
   }
 }
 ```
-You have to create a [Docker volume](https://docs.docker.com/engine/reference/commandline/volume_create/) to store the files that we will use to build the container. 
+You have to create a [Docker volume](https://docs.docker.com/engine/reference/commandline/volume_create/) to store the files that we will use to build the container. Let run init for terraform first.
 
 ```
-docker run -it -v $(pwd)/:/workpace -w /workpace terraform-docker:0.1 init;  apply -auto-approve
+docker run -it -v $(pwd)/:/workpace -w /workpace terraform-docker:0.1 init
 ```
 
+Then we have to mount [docker socket](https://stackoverflow.com/questions/36185035/how-to-mount-docker-socket-as-volume-in-docker-container-with-correct-group) as volume in docker container. 
+
+```
+docker run -it -v $(pwd)/:/workpace -w /workpace terraform-docker:0.1 -v /var/run/docker.sock:/var/run/docker.sock apply -auto-approve
+```
 ### Cloud Build
 
 Here is a simple example of `cloudbuil.yaml` file that invokes the `terraform-docker` image to execute your tasks.
