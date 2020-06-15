@@ -32,3 +32,5 @@ resource "null_resource" "building_docker_image" {
     EOF
   }
 }
+
+decrypted-data.txt
