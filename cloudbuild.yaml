@@ -9,6 +9,6 @@ steps:
   args: [ '-c', 'gcloud secrets versions access latest --secret=secret-data > decrypted-data.txt' ]
 
 # Use decrypted-data.txt to login to a private Docker registry
-- name: gcr.io/project-test-270001/terraform-docker:0.1
+- name: gcr.io/cloud-builders/docker
   entrypoint: 'bash'
   args: [ '-c', 'docker login --username=glad23 --password-stdin < decrypted-data.txt']
