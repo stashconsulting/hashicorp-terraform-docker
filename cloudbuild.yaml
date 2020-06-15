@@ -3,12 +3,7 @@ steps:
 - name: gcr.io/cloud-builders/git
   args: ['clone', 'https://github.com/stashconsulting/hashicorp-terraform-docker.git']
 
-# Using terraform Docker image
-- name: 'gcr.io/project-test-270001/terraform-docker:0.1'
-  id: init
-  args: ['init']
-
-# Create the resources using Terraform
-- name: 'gcr.io/project-test-270001/terraform-docker:0.1'
-  id: Build
-  args: ['apply', '-auto-approve']
+# Access the secret version in Secret Manager and store it in a file
+- name: gcr.io/cloud-builders/gcloud
+  entrypoint: 'bash'
+  args: [ '-c', 'gcloud secrets versions access latest --secret=secret-data > decrypted-data.txt' ]
