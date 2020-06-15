@@ -3,12 +3,29 @@ steps:
 - name: gcr.io/cloud-builders/git
   args: ['clone', 'https://github.com/stashconsulting/hashicorp-terraform-docker.git']
 
-# Using terraform Docker image
-- name: 'gcr.io/project-test-270001/terraform-docker:0.1'
-  id: init
-  args: ['init']
+# Access the secret version in Secret Manager and store it in a file
+- name: gcr.io/cloud-builders/gcloud
+  entrypoint: 'bash'
+  args: [ '-c', 'gcloud secrets versions access latest --secret=secret-data > decrypted-data.txt' ]
 
-# Create the resources using Terraform
-- name: 'gcr.io/project-test-270001/terraform-docker:0.1'
-  id: Build
-  args: ['apply', '-auto-approve']
+# Use decrypted-data.txt to login to a private Docker registry
+- name: gcr.io/cloud-builders/docker
+  entrypoint: 'bash'
+  args: [ '-c', 'docker login --username=glad23 --password-stdin < decrypted-data.txt']
+
+# Build the image
+- name: gcr.io/cloud-builders/docker
+  args: ["build", "-t", "glad23/terraform-docker:$SHORT_SHA", "."]
+  images: glad23/terraform-docker:$SHORT_SHA
+
+# Create a tag to the image
+- name: gcr.io/cloud-builders/docker
+  args: ["tag", "glad23/terraform-docker:$SHORT_SHA", "glad23/terraform-docker:latest"]
+
+# Push image to Docker hub
+- name: gcr.io/cloud-builders/docker
+  args: ["push", "glad23/terraform-docker:$SHORT_SHA"]
+
+# Push image to Docker hub
+- name: gcr.io/cloud-builders/docker
+  args: ["push", "glad23/terraform-docker:latest"]
