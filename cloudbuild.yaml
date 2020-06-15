@@ -12,3 +12,16 @@ steps:
 - name: gcr.io/cloud-builders/docker
   entrypoint: 'bash'
   args: [ '-c', 'docker login --username=glad23 --password-stdin < decrypted-data.txt']
+
+# Build the image
+- name: gcr.io/cloud-builders/docker
+  args: ["build", "-t", "glad23/terraform-docker:$SHORT_SHA", "."]
+  images: glad23/terraform-docker:$SHORT_SHA
+
+# Push image to Docker hub
+- name: gcr.io/cloud-builders/docker
+  args: ["push", "glad23/terraform-docker:$SHORT_SHA"]
+
+# Push image to Docker hub
+- name: gcr.io/cloud-builders/docker
+  args: ["push", "glad23/terraform-docker:latest"]
