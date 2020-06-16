@@ -19,7 +19,7 @@ Fixes # (issue)
 **System Information**:
 * Docker Info:
 
-## Before create the pull  request
+## Before creating the pull  request
 
 -  My code follows the contributing guidelines of this project
 - I have performed a self-review of my own code
