@@ -15,9 +15,9 @@ steps:
 
 # Build the image
 - name: gcr.io/cloud-builders/docker
-  args: ["build", "-t", "glad23/terraform-docker:entrypoint-$SHORT_SHA", "-f entrypoint/Dockerfile"]
+  args: ["build", "-t", "glad23/terraform-docker:entrypoint-$SHORT_SHA", "-f entrypoint/Dockerfile ."]
 - name: gcr.io/cloud-builders/docker
-  args: ["build", "-t", "glad23/terraform-docker:standard-$SHORT_SHA", "-f standard/Dockerfile"]
+  args: ["build", "-t", "glad23/terraform-docker:standard-$SHORT_SHA", "-f standard/Dockerfile ."]
 
 # Create a tag to the image
 - name: gcr.io/cloud-builders/docker
