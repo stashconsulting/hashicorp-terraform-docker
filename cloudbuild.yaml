@@ -15,16 +15,24 @@ steps:
 
 # Build the image
 - name: gcr.io/cloud-builders/docker
-  args: ["build", "-t", "glad23/terraform-docker:$SHORT_SHA", "."]
+  args: ["build", "-t", "glad23/terraform-docker:entrypoint-$SHORT_SHA", "-f entrypoint/Dockerfile"]
+- name: gcr.io/cloud-builders/docker
+  args: ["build", "-t", "glad23/terraform-docker:standard-$SHORT_SHA", "-f standard/Dockerfile"]
 
 # Create a tag to the image
 - name: gcr.io/cloud-builders/docker
-  args: ["tag", "glad23/terraform-docker:$SHORT_SHA", "glad23/terraform-docker:latest"]
+  args: ["tag", "glad23/terraform-docker:entrypoint-$SHORT_SHA", "glad23/terraform-docker:entrypoint-latest"]
+- name: gcr.io/cloud-builders/docker
+  args: ["tag", "glad23/terraform-docker:standard-$SHORT_SHA", "glad23/terraform-docker:standard-latest"]
 
 # Push image to Docker hub
 - name: gcr.io/cloud-builders/docker
-  args: ["push", "glad23/terraform-docker:$SHORT_SHA"]
+  args: ["push", "glad23/terraform-docker:entrypoint-$SHORT_SHA"]
+- name: gcr.io/cloud-builders/docker
+  args: ["push", "glad23/terraform-docker:standard-$SHORT_SHA"]
 
 # Push image to Docker hub
 - name: gcr.io/cloud-builders/docker
-  args: ["push", "glad23/terraform-docker:latest"]
+  args: ["push", "glad23/terraform-docker:entrypoint-latest"]
+- name: gcr.io/cloud-builders/docker
+  args: ["push", "glad23/terraform-docker:standard-latest"]
