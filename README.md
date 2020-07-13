@@ -8,7 +8,7 @@ This project is intended for people who want to build their docker images from t
 ### Usage
 
 Here is a simple example of `main.tf` file that build an image named `test:latest` 
-based on the Dockerfile specification. When you use `null_resource` changing something to the command does not trigger the re-execution if the command worked and the first place. To solve this problem we have to change the identifier or change the image value.
+based on the Dockerfile specification. 
 
 ```
 locals {
@@ -36,7 +36,25 @@ resource "null_resource" "building_docker_image" {
   }
 }
 ```
-Here is a simple example of variables.tf file, you can specify another image value changing the default value or running the following command `terraform apply -auto-approve -var image_id=kong_dbless`.
+
+> When you use `null_resource` changing something to the command does not trigger the re-execution if the command worked and the first place. To solve this problem we have to change the identifier or change the image value.
+
+```
+# local-exec for building the docker image
+resource "null_resource" "building_docker_image" {
+  triggers = {
+    image_id = var.image_id
+  }
+  provisioner "local-exec" {
+    command = <<EOF
+      docker build -t test:latest .
+    EOF
+  }
+}
+```
+
+
+Here is a simple example of variables.tf file, you can specify another image value changing the default value or running the following command `terraform apply -auto-approve -var image_id=kong_dbless`
 
 ```
 variable "image_id" {
