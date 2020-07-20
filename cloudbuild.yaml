@@ -6,33 +6,41 @@ steps:
 # Access the secret version in Secret Manager and store it in a file
 - name: gcr.io/cloud-builders/gcloud
   entrypoint: 'bash'
-  args: [ '-c', 'gcloud secrets versions access latest --secret=secret-data > decrypted-data.txt' ]
+  args: [ '-c', 'gcloud secrets versions access latest --secret=docker-hub-password > decrypted-data.txt' ]
 
 # Use decrypted-data.txt to login to a private Docker registry
 - name: gcr.io/cloud-builders/docker
   entrypoint: 'bash'
-  args: [ '-c', 'docker login --username=glad23 --password-stdin < decrypted-data.txt']
+  args: [ '-c', 'docker login --username=stashconsulting --password-stdin < decrypted-data.txt']
 
 # Build the image
 - name: gcr.io/cloud-builders/docker
-  args: ["build", "-t", "glad23/terraform-docker:entrypoint-$SHORT_SHA", "-f", "entrypoint/Dockerfile",  "."]
+  args: ["build", "-t", "stashconsulting/terraform-docker:entrypoint-$SHORT_SHA", "-f", "entrypoint/Dockerfile",  "."]
 - name: gcr.io/cloud-builders/docker
-  args: ["build", "-t", "glad23/terraform-docker:standard-$SHORT_SHA", "-f", "standard/Dockerfile", "."]
+  args: ["build", "-t", "stashconsulting/terraform-docker:standard-$SHORT_SHA", "-f", "standard/Dockerfile", "."]
+- name: gcr.io/cloud-builders/docker
+  args: ["build", "-t", "stashconsulting/terraform-docker:gcloud-$SHORT_SHA", "-f", "gcloud/Dockerfile",  "."]
 
 # Create a tag to the image
 - name: gcr.io/cloud-builders/docker
-  args: ["tag", "glad23/terraform-docker:entrypoint-$SHORT_SHA", "glad23/terraform-docker:entrypoint-latest"]
+  args: ["tag", "stashconsulting/terraform-docker:entrypoint-$SHORT_SHA", "stashconsulting/terraform-docker:entrypoint-latest"]
 - name: gcr.io/cloud-builders/docker
-  args: ["tag", "glad23/terraform-docker:standard-$SHORT_SHA", "glad23/terraform-docker:standard-latest"]
+  args: ["tag", "stashconsulting/terraform-docker:standard-$SHORT_SHA", "stashconsulting/terraform-docker:standard-latest"]
+- name: gcr.io/cloud-builders/docker
+  args: ["tag", "stashconsulting/terraform-docker:gcloud-$SHORT_SHA", "stashconsulting/terraform-docker:gcloud-latest"]
 
 # Push image to Docker hub
 - name: gcr.io/cloud-builders/docker
-  args: ["push", "glad23/terraform-docker:entrypoint-$SHORT_SHA"]
+  args: ["push", "stashconsulting/terraform-docker:entrypoint-$SHORT_SHA"]
 - name: gcr.io/cloud-builders/docker
-  args: ["push", "glad23/terraform-docker:standard-$SHORT_SHA"]
+  args: ["push", "stashconsulting/terraform-docker:standard-$SHORT_SHA"]
+- name: gcr.io/cloud-builders/docker
+  args: ["push", "stashconsulting/terraform-docker:gcloud-$SHORT_SHA"]
 
 # Push image to Docker hub
 - name: gcr.io/cloud-builders/docker
-  args: ["push", "glad23/terraform-docker:entrypoint-latest"]
+  args: ["push", "stashconsulting/terraform-docker:entrypoint-latest"]
 - name: gcr.io/cloud-builders/docker
-  args: ["push", "glad23/terraform-docker:standard-latest"]
+  args: ["push", "stashconsulting/terraform-docker:standard-latest"]
+- name: gcr.io/cloud-builders/docker
+  args: ["push", "stashconsulting/terraform-docker:gcloud-latest"]

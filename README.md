@@ -69,30 +69,42 @@ variable "image_id" {
 You have to create a [Docker volume](https://docs.docker.com/engine/reference/commandline/volume_create/) to store the files that we will use to build the container. Let run init for terraform first.
 
 ```
-docker run -it -v $(pwd)/:/workpace -w /workpace terraform-docker:0.1 init
+docker run -it -v $(pwd)/:/workpace -w /workpace stashconsulting/terraform-docker:entrypoint-latest init
 ```
 
 Then we have to mount [docker socket](https://stackoverflow.com/questions/36185035/how-to-mount-docker-socket-as-volume-in-docker-container-with-correct-group) as volume in docker container. 
 
 ```
 docker run -it -v $(pwd)/:/workpace -w /workpace -v /var/run/docker.sock:/var/run/docker.sock 
- terraform-docker:0.1 apply -auto-approve
+ stashconsulting/terraform-docker:entrypoint-latest apply -auto-approve
 ```
 
 ### Steps to use the standard version
 > You can run bash based in ubuntu and terraform commands
 
-Run init.
+Run init
 
 ```
-docker run -it -v $(pwd)/:/workpace -w /workpace terraform-docker:0.1 "terraform init"
+docker run -it -v $(pwd)/:/workpace -w /workpace stashconsulting/terraform-docker:standard-latest "terraform init"
 ```
 
 Run apply
 
 ```
 docker run -it -v $(pwd)/:/workpace -w /workpace -v /var/run/docker.sock:/var/run/docker.sock 
- terraform-docker:0.1 "terraform apply -auto-approve"
+ stashconsulting/terraform-docker:standard-latest "terraform apply -auto-approve"
+```
+Another  example
+```
+docker run -it -v $(pwd)/:/workpace -w /workpace stashconsulting/terraform-docker:standard-latest "ls"
+```
+
+### Steps to use the gcloud version
+> You can run bash based in ubuntu, terraform and gcloud commands.
+
+Example
+```
+docker run -it -v $(pwd)/:/workpace -w /workpace stashconsulting/terraform-docker:gcloud-latest "gcloud init"
 ```
 
 ### Cloud Build
@@ -100,7 +112,7 @@ docker run -it -v $(pwd)/:/workpace -w /workpace -v /var/run/docker.sock:/var/ru
 Here is a simple example of `cloudbuil.yaml` file that invokes the `terraform-docker` image to execute your tasks.
 
 ```
-- name: 'gcr.io/project-test-270001/terraform-docker:0.1'
+- name: 'gcr.io/project-test-270001/terraform-docker:entrypoint-latest'
   id: init
   args: ['init']
 ```
