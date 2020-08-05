@@ -11,7 +11,7 @@ steps:
 # Use decrypted-data.txt to login to a private Docker registry
 - name: gcr.io/cloud-builders/docker
   entrypoint: 'bash'
-  args: [ '-c', 'docker login --username=stashconsulting --password-stdin < decrypted-data.txt']
+  args: [ '-c', 'docker login --username=$REPO_NAME --password-stdin < decrypted-data.txt']
 
 # Build the image
 - name: gcr.io/cloud-builders/docker
