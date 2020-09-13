@@ -3,6 +3,16 @@ Integration between Terraform and Docker.
 
 This project is intended for people who want to build their docker images from terraform.
 
+## Some advise
+Now the latest version images will come by default with Terraform v0.13.0 or higher for the correct operation of the command `terraform login`.
+
+Some previous versions of the images remain available on Docker Hub with their respective tags.
+> Terraform v0.12.18
+* [terraform-docker:entrypoint](https://hub.docker.com/layers/stashconsulting/terraform-docker/entrypoint-d279264/images/sha256-6b677b94011b75c7442ce7b96650c1553fe15fef766f0ca09011a33dcca2fe39?context=repo), released on 18 August 2020.
+* [terraform-docker:standard](https://hub.docker.com/layers/stashconsulting/terraform-docker/standard-d279264/images/sha256-7a7cc0d703bdfdbc29444befe8e4083c5578f9ce2d5740e51705a87c9db3cbe1?context=repo), released on 18 August 2020.
+* [terraform-docker:gcloud](https://hub.docker.com/layers/stashconsulting/terraform-docker/gcloud-d279264/images/sha256-189ffac5d02f0780936371680bdf3bfe4b5de08b9c04c7eb4fe6790ae2592d75?context=repo), released on 18 August 2020.
+
+
 ## Getting Started
 
 ### Usage
